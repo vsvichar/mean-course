@@ -1,5 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { Alert } from 'selenium-webdriver';
+
+import { Post } from '../post.model';
 
 @Component({
     selector: 'app-post-create',
@@ -7,10 +9,14 @@ import { Alert } from 'selenium-webdriver';
     styleUrls: ['./post-create.component.css']
 })
 export class PostCreateComponent {
-    enteredValue = '';
-    newPost = 'NO TEXT';
-
+    enteredTitle = '';
+    enteredContent = '';
+    @Output() postCreated = new EventEmitter<Post>();
     OnAddPost() {
-        this.newPost = this.enteredValue;
+        const post: Post = {
+            title: this.enteredTitle,
+            content: this.enteredContent
+        };
+        this.postCreated.emit(post);
     }
 }
